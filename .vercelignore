@@ -3,6 +3,7 @@ backend/package-lock.json
 backend/.env
 backend/dev.db
 backend/dev.db-journal
+backend/prisma/migrations
 node_modules
 *.log
 # Deployment trigger
