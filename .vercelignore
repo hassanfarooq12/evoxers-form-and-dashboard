@@ -5,3 +5,4 @@ backend/dev.db
 backend/dev.db-journal
 node_modules
 *.log
+# Deployment trigger
