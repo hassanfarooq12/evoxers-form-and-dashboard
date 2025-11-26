@@ -11,21 +11,14 @@ A complete client questionnaire system with admin dashboard, built with React, N
 │   ├── pages/             # Main pages (Index, Admin, Success, NotFound)
 │   └── integrations/      # Supabase integration (legacy, not used)
 │
-├── backend/               # Node.js + Express + Prisma backend
-│   ├── src/
-│   │   ├── server.js      # Express server (port 4000)
-│   │   ├── routes/        # API routes
-│   │   ├── controllers/   # Request handlers
-│   │   ├── services/      # Business logic
-│   │   └── database/      # Prisma client
-│   ├── prisma/            # Database schema and migrations
-│   └── dev.db             # SQLite database
-│
-└── backend/dashboard/     # Admin dashboard (React + Vite)
+└── backend/               # Node.js + Express + Prisma backend
     ├── src/
-    │   ├── pages/         # Login, Submissions, SubmissionDetail
-    │   └── Layout.jsx     # Dashboard layout with sidebar
-    └── vite.config.js     # Configured for port 3000
+    │   ├── server.js      # Express server (port 4000)
+    │   ├── routes/        # API routes
+    │   ├── controllers/   # Request handlers
+    │   ├── services/      # Business logic
+    │   └── database/      # Prisma client
+    └── prisma/            # Database schema and migrations
 ```
 
 ## Features
@@ -55,9 +48,6 @@ cd backend
 npm install
 npx prisma generate
 
-# Dashboard
-cd dashboard
-npm install
 ```
 
 ### 2. Start All Servers
@@ -70,13 +60,7 @@ cd backend
 npm run dev
 ```
 
-**Terminal 2 - Dashboard (port 3000):**
-```bash
-cd backend/dashboard
-npm run dev
-```
-
-**Terminal 3 - Frontend (port 5173):**
+**Terminal 2 - Frontend (port 5173):**
 ```bash
 npm run dev
 ```
@@ -84,7 +68,7 @@ npm run dev
 ### 3. Access the Applications
 
 - **Questionnaire Form**: http://localhost:5173
-- **Admin Dashboard**: http://localhost:3000
+- **Admin Dashboard**: http://localhost:5173/admin
   - Login: `admin` / `admin123`
 - **Backend API**: http://localhost:4000
   - Health check: http://localhost:4000/
@@ -174,7 +158,7 @@ For production, set these in your Vercel project settings.
 
 The project is configured for **single Vercel project deployment** where:
 - **Frontend** is served at the root (`/`)
-- **Dashboard** is served at `/dashboard`
+- **Admin Dashboard** is served at `/admin`
 - **API** is served at `/api/*`
 
 📖 **See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) for complete step-by-step deployment instructions.**
@@ -194,7 +178,7 @@ All three applications will be available from a single deployment URL.
 
 - **Frontend**: React, TypeScript, Vite, Tailwind CSS, shadcn/ui
 - **Backend**: Node.js, Express, Prisma, PostgreSQL (production), SQLite (local dev)
-- **Dashboard**: React, Vite, Tailwind CSS, Axios, React Router
+- **Admin Dashboard**: Integrated into frontend at `/admin` route
 - **Deployment**: Vercel (serverless functions)
 
 ## License
