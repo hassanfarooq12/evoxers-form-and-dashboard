@@ -10,7 +10,8 @@ export const prisma =
     log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
   });
 
-if (process.env.NODE_ENV !== 'production') {
+// Cache Prisma client in global scope for serverless (works in both dev and production on Vercel)
+if (!globalForPrisma.prisma) {
   globalForPrisma.prisma = prisma;
 }
 

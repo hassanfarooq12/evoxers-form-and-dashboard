@@ -57,25 +57,49 @@ Vercel should auto-detect the configuration from `vercel.json`, but verify these
 
 ## Step 4: Add Environment Variables
 
-This is the **most important step**. Go to **Settings** → **Environment Variables** and add:
+This is the **most important step**. 
+
+### Where to Add Environment Variables in Vercel:
+
+1. **After importing your project**, you'll see your project dashboard
+2. Click on **Settings** (top navigation bar)
+3. Click on **Environment Variables** (left sidebar)
+4. You'll see a form to add new environment variables
 
 ### Required Environment Variable
 
 #### 1. DATABASE_URL
 
-**Variable Name:** `DATABASE_URL`
+**In the Vercel Environment Variables page:**
 
-**Value:**
-```
-postgres://postgres.lasxxeuklurnjsxxvxtw:uRpRrD9dho5y2rQ4@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true
-```
+1. **Key (Variable Name):** Type `DATABASE_URL`
 
-**Environments:** 
-- ✅ Production
-- ✅ Preview  
-- ✅ Development
+2. **Value:** Paste this:
+   ```
+   postgres://postgres.lasxxeuklurnjsxxvxtw:uRpRrD9dho5y2rQ4@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true
+   ```
+
+3. **Select Environments:** Check all three boxes:
+   - ✅ Production
+   - ✅ Preview  
+   - ✅ Development
+
+4. Click **Save**
 
 **Why:** This is the connection pooler URL optimized for Vercel serverless functions. It uses port 6543 with pgbouncer for connection pooling.
+
+**Visual Guide:**
+```
+Vercel Dashboard → Your Project → Settings → Environment Variables
+                                                      ↓
+                                    [Add New] button
+                                                      ↓
+                                    Key: DATABASE_URL
+                                    Value: [paste connection string]
+                                    Environments: ☑ Production ☑ Preview ☑ Development
+                                                      ↓
+                                                    [Save]
+```
 
 ---
 
