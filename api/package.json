@@ -5,6 +5,10 @@
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "prisma": "^6.19.0"
+  },
+  "scripts": {
+    "postinstall": "prisma generate --schema=../backend/prisma/schema.prisma"
   }
 }
