@@ -9,19 +9,23 @@
       }
     },
     {
-      "src": "api/**/*.js",
+      "src": "api/index.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": [
           "backend/src/**",
           "backend/prisma/schema.prisma",
-          "backend/node_modules/@prisma/client/**",
-          "backend/node_modules/.prisma/**"
+          "node_modules/@prisma/client/**",
+          "node_modules/.prisma/**"
         ]
       }
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
+    },
     {
       "source": "/((?!api/).*)",
       "destination": "/index.html"

@@ -19,10 +19,16 @@ app.use(cors({
 
 app.use(express.json());
 
-// Routes - on Vercel, /api is already prefixed, so use root
-// For local dev, we still need /api prefix
-const apiPrefix = process.env.VERCEL ? '' : '/api';
-app.use(apiPrefix, submissionRoutes);
+// Routes - on Vercel, requests come with /api prefix from rewrite
+// So we need to handle /api/* paths
+// For local dev, we use /api prefix
+if (process.env.VERCEL) {
+  // On Vercel, requests are rewritten to /api/index.js but keep original path
+  // So /api/submit becomes a request to Express with path /api/submit
+  app.use('/api', submissionRoutes);
+} else {
+  app.use('/api', submissionRoutes);
+}
 
 app.get('/', (_req, res) => {
   res.json({ status: 'ok', message: 'Backend is running' });
