@@ -8,7 +8,7 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "build:backend": "cd backend && npm install && npm run postinstall",
-    "postinstall": "npx prisma generate --schema=./backend/prisma/schema.prisma --generator client.output=./node_modules/.prisma/client",
+    "postinstall": "npx prisma generate --schema=./backend/prisma/schema.prisma",
     "build:all": "npm run build:backend && npm run build",
     "vercel-build": "npm run build:all",
     "lint": "eslint .",
