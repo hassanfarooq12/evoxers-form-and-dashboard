@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -19,9 +18,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import type { Tables } from "@/integrations/supabase/types";
 
-type Submission = Tables<"submissions">;
+type Submission = {
+  id: string;
+  created_at: string;
+  full_name: string;
+  company_name?: string | null;
+  role_position?: string | null;
+  work_email: string;
+  phone?: string | null;
+  website_links?: string | null;
+  services: string;
+  services_other?: string | null;
+  [key: string]: any;
+};
 
 const Admin = () => {
   const { toast } = useToast();
@@ -44,12 +54,15 @@ const Admin = () => {
 
   const fetchSubmissions = useCallback(async () => {
     try {
-      const { data, error } = await supabase
-        .from("submissions")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
+      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:4000');
+      const apiPath = apiUrl ? `${apiUrl}/api/all` : '/api/all';
+      const response = await fetch(apiPath);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
       setSubmissions(data || []);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Failed to fetch submissions.";
@@ -173,16 +186,32 @@ const Admin = () => {
                       <TableCell>{submission.company_name || "N/A"}</TableCell>
                       <TableCell>
                         <div className="flex flex-wrap gap-1">
-                          {(submission.services ?? []).slice(0, 2).map((service, i) => (
-                            <span key={i} className="text-xs bg-primary/20 text-primary px-2 py-1 rounded">
-                              {service}
-                            </span>
-                          ))}
-                          {(submission.services?.length ?? 0) > 2 && (
-                            <span className="text-xs text-muted-foreground">
-                              +{(submission.services?.length ?? 0) - 2}
-                            </span>
-                          )}
+                          {typeof submission.services === 'string' 
+                            ? submission.services.split(',').slice(0, 2).map((service: string, i: number) => (
+                                <span key={i} className="text-xs bg-primary/20 text-primary px-2 py-1 rounded">
+                                  {service.trim()}
+                                </span>
+                              ))
+                            : Array.isArray(submission.services)
+                            ? submission.services.slice(0, 2).map((service: string, i: number) => (
+                                <span key={i} className="text-xs bg-primary/20 text-primary px-2 py-1 rounded">
+                                  {service}
+                                </span>
+                              ))
+                            : null
+                          }
+                          {(() => {
+                            const services = typeof submission.services === 'string' 
+                              ? submission.services.split(',')
+                              : Array.isArray(submission.services) 
+                              ? submission.services 
+                              : [];
+                            return services.length > 2 && (
+                              <span className="text-xs text-muted-foreground">
+                                +{services.length - 2}
+                              </span>
+                            );
+                          })()}
                         </div>
                       </TableCell>
                       <TableCell className="text-right">
@@ -232,11 +261,18 @@ const Admin = () => {
               <div>
                 <p className="text-sm font-medium text-muted-foreground mb-2">Services</p>
                 <div className="flex flex-wrap gap-2">
-                  {(selectedSubmission.services ?? []).map((service, i) => (
-                    <span key={i} className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">
-                      {service}
-                    </span>
-                  ))}
+                  {(() => {
+                    const services = typeof selectedSubmission.services === 'string'
+                      ? selectedSubmission.services.split(',').map(s => s.trim())
+                      : Array.isArray(selectedSubmission.services)
+                      ? selectedSubmission.services
+                      : [];
+                    return services.map((service: string, i: number) => (
+                      <span key={i} className="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">
+                        {service}
+                      </span>
+                    ));
+                  })()}
                 </div>
               </div>
 
