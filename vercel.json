@@ -27,14 +27,6 @@
       }
     },
     {
-      "src": "/dashboard/(.*\\.(js|css|ico|png|jpg|jpeg|svg|woff|woff2|ttf|eot))",
-      "dest": "/backend/dashboard/dist/$1"
-    },
-    {
-      "src": "/dashboard/(.*)",
-      "dest": "/backend/dashboard/dist/index.html"
-    },
-    {
       "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|woff|woff2|ttf|eot))",
       "dest": "/dist/$1"
     },
