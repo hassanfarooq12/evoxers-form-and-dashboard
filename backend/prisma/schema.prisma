@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Submission {
+  id                     String   @id @default(uuid())
+  created_at             DateTime @default(now())
+
+  // Step 1: Basic Information
+  full_name              String
+  company_name           String?
+  role_position          String?
+  work_email             String
+  phone                  String?
+  website_links          String?
+
+  // Step 2: Services Required
+  services               String    // comma- or semicolon-separated list from the form
+  services_other         String?
+
+  // Step 3: Video/Motion Graphics (conditional)
+  video_count_option     String?
+  video_custom_requirement String?
+  video_usage_platforms  String    // comma- or semicolon-separated list from the form
+  has_raw_footage        String?
+
+  // Step 4: Web/Software Development (conditional)
+  web_services           String    // comma- or semicolon-separated list from the form
+  chatbot_platform       String?
+  has_existing_website   String?
+  existing_website_link  String?
+  website_purpose        String?
+
+  // Step 5: Brand Identity (conditional)
+  brand_services         String    // comma- or semicolon-separated list from the form
+  brand_name             String?
+  brand_files_link       String?
+
+  // Step 6: Meta Ads (conditional)
+  ad_goal                String?
+  ad_budget              String?
+  ad_target_locations    String?
+
+  // Step 7: Creative Direction
+  favorite_colors        String?
+  business_model         String?
+  future_vision          String?
+  inspiration_brands     String?
+  how_heard              String?
+}
