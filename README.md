@@ -33,8 +33,9 @@ A complete client questionnaire system with admin dashboard, built with React, N
 - **Multi-step Questionnaire Form**: Collects comprehensive client information across 7 steps
 - **Admin Dashboard**: View, search, export, and manage submissions
 - **RESTful API**: Node.js/Express backend with Prisma ORM
-- **SQLite Database**: Lightweight, file-based database
+- **PostgreSQL Database**: Production-ready database (SQLite for local dev, PostgreSQL for production)
 - **Modern UI**: Tailwind CSS with dark mode support
+- **Vercel Ready**: Configured for deployment on Vercel
 
 ## Prerequisites
 
@@ -98,32 +99,103 @@ npm run dev
 
 ## Database
 
-The project uses SQLite with Prisma ORM. The database file is located at `backend/dev.db`.
+The project uses **PostgreSQL** for production (Vercel deployment) and supports **SQLite** for local development.
 
-To run migrations:
-```bash
-cd backend
-npx prisma migrate dev
-```
+### Local Development (SQLite)
 
-To view database:
-```bash
-cd backend
-npx prisma studio
-```
+For local development, the project defaults to SQLite. To use SQLite:
+
+1. Update `backend/prisma/schema.prisma` to use SQLite:
+   ```prisma
+   datasource db {
+     provider = "sqlite"
+     url      = "file:./dev.db"
+   }
+   ```
+
+2. Run migrations:
+   ```bash
+   cd backend
+   npx prisma migrate dev
+   ```
+
+3. View database:
+   ```bash
+   cd backend
+   npx prisma studio
+   ```
+
+### Production (PostgreSQL)
+
+For production/Vercel deployment, use PostgreSQL:
+
+1. Set up a PostgreSQL database (Vercel Postgres, Supabase, etc.)
+2. Set `DATABASE_URL` environment variable
+3. The schema is already configured for PostgreSQL
+4. Run migrations:
+   ```bash
+   cd backend
+   export DATABASE_URL="your-postgresql-connection-string"
+   npx prisma migrate deploy
+   ```
 
 ## Environment Variables
 
-Create a `.env` file in the root directory (optional, not required for local development):
+### Local Development
+
+Create a `.env` file in the `backend` directory:
+
 ```env
-# Not currently used, but can be added for future Supabase integration
+# For PostgreSQL (production)
+DATABASE_URL=postgresql://user:password@host:port/database?sslmode=require
+
+# For local development with SQLite (update schema.prisma to use sqlite)
+# DATABASE_URL is not needed for SQLite
+
+# CORS Origins (comma-separated)
+CORS_ORIGIN=http://localhost:5173,http://localhost:3000
+
+# Node Environment
+NODE_ENV=development
 ```
+
+### Frontend & Dashboard
+
+Create `.env` files in root and `backend/dashboard` directories:
+
+```env
+# Backend API URL
+VITE_API_URL=http://localhost:4000
+```
+
+For production, set these in your Vercel project settings.
+
+## Deployment
+
+The project is configured for **single Vercel project deployment** where:
+- **Frontend** is served at the root (`/`)
+- **Dashboard** is served at `/dashboard`
+- **API** is served at `/api/*`
+
+📖 **See [VERCEL_DEPLOYMENT.md](./VERCEL_DEPLOYMENT.md) for complete step-by-step deployment instructions.**
+
+📋 **Quick reference: [VERCEL_ENV_VARIABLES.txt](./VERCEL_ENV_VARIABLES.txt) - Copy/paste environment variables**
+
+### Quick Deploy
+
+1. ✅ PostgreSQL database already set up (Supabase)
+2. Create a Vercel project and import this repository
+3. Add `DATABASE_URL` environment variable (see VERCEL_ENV_VARIABLES.txt)
+4. Deploy!
+
+All three applications will be available from a single deployment URL.
 
 ## Technologies Used
 
 - **Frontend**: React, TypeScript, Vite, Tailwind CSS, shadcn/ui
-- **Backend**: Node.js, Express, Prisma, SQLite
+- **Backend**: Node.js, Express, Prisma, PostgreSQL (production), SQLite (local dev)
 - **Dashboard**: React, Vite, Tailwind CSS, Axios, React Router
+- **Deployment**: Vercel (serverless functions)
 
 ## License
 

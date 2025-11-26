@@ -1,0 +1,40 @@
+===========================================
+VERCEL ENVIRONMENT VARIABLES
+===========================================
+
+Copy and paste these into Vercel Dashboard:
+Settings → Environment Variables
+
+===========================================
+REQUIRED VARIABLE
+===========================================
+
+Variable Name: DATABASE_URL
+
+Value:
+postgres://postgres.lasxxeuklurnjsxxvxtw:uRpRrD9dho5y2rQ4@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true
+
+Environments: ✅ Production, ✅ Preview, ✅ Development
+
+===========================================
+OPTIONAL VARIABLES (Not Required)
+===========================================
+
+Variable Name: CORS_ORIGIN
+Value: (Leave empty or don't add)
+Environments: Production, Preview, Development
+Note: Not needed for single deployment
+
+Variable Name: NODE_ENV
+Value: production
+Environments: Production only
+Note: Vercel sets this automatically
+
+===========================================
+QUICK COPY - DATABASE_URL ONLY
+===========================================
+
+postgres://postgres.lasxxeuklurnjsxxvxtw:uRpRrD9dho5y2rQ4@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true
+
+===========================================
+

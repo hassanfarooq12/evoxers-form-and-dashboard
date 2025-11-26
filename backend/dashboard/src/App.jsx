@@ -6,8 +6,11 @@ import SubmissionDetail from "./pages/SubmissionDetail";
 import { ProtectedRoute } from "./ProtectedRoute";
 
 export default function App() {
+  // Use basename for deployment at /dashboard
+  const basename = import.meta.env.PROD ? '/dashboard' : '';
+  
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route

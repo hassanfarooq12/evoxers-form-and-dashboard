@@ -212,7 +212,10 @@ export const QuestionnaireForm = () => {
         how_heard: formData.how_heard || null,
       };
 
-      const res = await fetch("http://localhost:4000/api/submit", {
+      // Use relative path for single deployment, or env variable for separate deployment
+      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '' : 'http://localhost:4000');
+      const apiPath = apiUrl ? `${apiUrl}/api/submit` : '/api/submit';
+      const res = await fetch(apiPath, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

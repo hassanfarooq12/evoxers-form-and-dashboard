@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Submission" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "full_name" TEXT NOT NULL,
     "company_name" TEXT,
     "role_position" TEXT,
@@ -29,5 +29,7 @@ CREATE TABLE "Submission" (
     "business_model" TEXT,
     "future_vision" TEXT,
     "inspiration_brands" TEXT,
-    "how_heard" TEXT
+    "how_heard" TEXT,
+
+    CONSTRAINT "Submission_pkey" PRIMARY KEY ("id")
 );
